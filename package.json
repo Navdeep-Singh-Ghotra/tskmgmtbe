@@ -1,0 +1,52 @@
+{
+  "name": "tskmgmtbe",
+  "version": "1.0.0",
+  "description": "This is api for task manager",
+  "keywords": [
+    "nodejs",
+    "express",
+    "api",
+    "rest"
+  ],
+  "homepage": "https://github.com/Navdeep-Singh-Ghotra/tskmgmtbe#readme",
+  "bugs": {
+    "url": "https://github.com/Navdeep-Singh-Ghotra/tskmgmtbe/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Navdeep-Singh-Ghotra/tskmgmtbe.git"
+  },
+  "license": "MIT",
+  "author": "Navdeep Singh Ghotra",
+  "type": "commonjs",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "jest --watchall"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "compression": "^1.8.1",
+    "config": "^4.2.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.1",
+    "gravatar": "^1.8.2",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.1.4",
+    "morgan": "^1.10.1",
+    "pg": "^8.17.1",
+    "request": "^2.88.2",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.11",
+    "sequelize-cli": "^6.6.5",
+    "supertest": "^7.2.2"
+  }
+}
