@@ -52,5 +52,5 @@ put this as mongoURI in config default `mongosh` `db.getMongo().getURI()`
 
 `npx kill-port 5000`
 
-`mongod --version`
+`mongod --version
 
