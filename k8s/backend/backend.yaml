@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nodeapp
-        image: navdeepsinghghotra/tskmgmtbe:2  # Build this locally first
+        image: navdeepsinghghotra/tskmgmtbe:4  # Build this locally first
         ports:
         - containerPort: 3000
         env:
