@@ -183,3 +183,13 @@ Make changes to architect Node.js + MongoDB application as:
 
  Maintainable with structured logging and monitoring
 
+
+Storageclass provisioner 
+# Download the latest YAML
+curl -LO https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+
+# Apply it
+kubectl apply -f local-path-storage.yaml
+
+# Set as default storage class (if needed)
+kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
