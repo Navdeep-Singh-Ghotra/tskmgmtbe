@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodeapp
+  template:
+    metadata:
+      labels:
+        app: nodeapp
+    spec:
+      containers:
+      - name: nodeapp
+        image: navdeepsinghghotra/tskmgmtbe:2  # Build this locally first
+        ports:
+        - containerPort: 3000
+        env:
+        - name: MONGODB_URI
+          value: "mongodb://admin:z7v1kxwDCPieJ1ap@mongodb.database.svc.cluster.local:27017/admin"
+          # Get password: kubectl get secret mongodb-secret -n database -o jsonpath='{.data.password}' | base64 --decode
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeapp-service
+spec:
+  selector:
+    app: nodeapp
+  ports:
+  - port: 80
+    targetPort: 3000
+  type: LoadBalancer
