@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: api-tester
+  namespace: database
+spec:
+  containers:
+  - name: tester
+    image: curlimages/curl
+    command: ["sleep", "3600"]  # Keeps pod running

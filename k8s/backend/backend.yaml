@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: nodeapp
-        image: navdeepsinghghotra/tskmgmtbe:5  # Build this locally first
+        image: navdeepsinghghotra/tskmgmtbe:6  # Build this locally first
         ports:
-        - containerPort: 3000
+        - containerPort: 5000
         env:
         - name: MONGODB_URI
           value: "mongodb://admin:z7v1kxwDCPieJ1ap@mongodb.database.svc.cluster.local:27017/admin"
@@ -30,6 +30,8 @@ spec:
   selector:
     app: nodeapp
   ports:
-  - port: 80
-    targetPort: 3000
-  type: LoadBalancer
+  - name: http
+    port: 80          # External service port
+    targetPort: 5000  # Must match containerPort
+    protocol: TCP
+  type: ClusterIP
