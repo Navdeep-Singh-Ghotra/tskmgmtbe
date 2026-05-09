@@ -193,3 +193,40 @@ kubectl apply -f local-path-storage.yaml
 
 # Set as default storage class (if needed)
 kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+`kubectl get secrets/mongodb-secret --template='{{.data.password | base64decode}}'`
+`kubectl exec mongodb-0 -- mongosh   -u admin   -p "z7v1kxwDCPieJ1ap"   --authenticationDatabase admin   --eval "db.adminCommand('ping')"`
+
+
+`vault auth enable kubernetes`
+# Configure Kubernetes auth
+vault write auth/kubernetes/config \
+  kubernetes_host="https://kubernetes.default.svc" \
+  token_reviewer_jwt="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" \
+  kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+  issuer="https://kubernetes.default.svc.cluster.local"
+
+  # Create a policy file (database-policy.hcl)
+cat > database-policy.hcl <<EOF
+path "secret/data/database/*" {
+  capabilities = ["read"]
+}
+EOF
+
+# Write policy to Vault
+vault policy write database-app database-policy.hcl
+
+# Create role for database namespace
+vault write auth/kubernetes/role/database-app \
+  bound_service_account_names=database-sa \
+  bound_service_account_namespaces=database \
+  policies= \
+  ttl=24h
+
+
+# Store database credentials
+vault kv put secret/database/creds \
+  username="dbadmin" \
+  password="SecurePass123!" \
+  host="database-host" \
+  port="5432"

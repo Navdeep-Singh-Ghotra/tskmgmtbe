@@ -19,8 +19,16 @@ spec:
         - containerPort: 5000
         env:
         - name: MONGODB_URI
-          value: "mongodb://admin:z7v1kxwDCPieJ1ap@mongodb.database.svc.cluster.local:27017/admin"
-          # Get password: kubectl get secret mongodb-secret -n database -o jsonpath='{.data.password}' | base64 --decode
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key:  MONGODB_URI
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: config
+              key:  PORT
+          
 ---
 apiVersion: v1
 kind: Service
@@ -32,6 +40,6 @@ spec:
   ports:
   - name: http
     port: 80          # External service port
-    targetPort: 5000  # Must match containerPort
+    targetPort: 5003  # Must match containerPort
     protocol: TCP
   type: ClusterIP
