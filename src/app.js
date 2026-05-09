@@ -2,6 +2,7 @@
 const express = require('express');
 const connectDB = require('../config/db');
 const os = require('os');
+const mongoose = require("mongoose");
 
 const app = express();
 
@@ -34,6 +35,8 @@ app.get('/health', (req, res) => {
     });
 });
 
+
+
 /**
  * Readiness Probe - Comprehensive check
  * Checks if application is ready to serve traffic
@@ -43,8 +46,6 @@ app.get('/ready', async (req, res) => {
     try {
         const checks = {
             database: await checkDatabaseConnection(),
-            memory: checkMemoryUsage(),
-            disk: checkDiskSpace(),
             timestamp: new Date().toISOString()
         };
 
