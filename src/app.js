@@ -18,7 +18,7 @@ app.use('/api/auth', require('../routes/api/auth'));
 app.use('/api/profile', require('../routes/api/profile'));
 app.use('/api/posts', require('../routes/api/posts'));
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 
 // ============ HEALTH CHECK ENDPOINTS ============
 
@@ -49,8 +49,7 @@ app.get('/ready', async (req, res) => {
             timestamp: new Date().toISOString()
         };
 
-        const allHealthy = checks.database.status === 'healthy' &&
-            checks.memory.status === 'healthy';
+        const allHealthy = checks.database.status === 'healthy';
 
         if (allHealthy) {
             res.status(200).json({
@@ -113,8 +112,8 @@ app.get('/healthz', async (req, res) => {
 async function checkDatabaseConnection() {
     try {
         // Check mongoose connection state
+        //const dbState = mongoose.connection.readyState;
         const dbState = mongoose.connection.readyState;
-
         const states = {
             0: { status: 'disconnected', healthy: false },
             1: { status: 'connected', healthy: true },
